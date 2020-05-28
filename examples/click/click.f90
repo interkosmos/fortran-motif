@@ -43,8 +43,7 @@ contains
 
     ! static void XtCallbackProc(Widget widget, XtPointer client_data, XtPointer call_data)
     subroutine quit_callback(widget, client_data, call_data) bind(c)
-        !! Xt callback routine for `XM_N_ACTIVATE_CALLBACK` that quits the
-        !! application.
+        !! Xt callback routine that quits the application.
         type(c_ptr), intent(in), value :: widget
         type(c_ptr), intent(in), value :: client_data
         type(c_ptr), intent(in), value :: call_data
