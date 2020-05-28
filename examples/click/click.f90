@@ -17,7 +17,7 @@ contains
     ! static void XtCallbackProc(Widget widget, XtPointer client_data, XtPointer call_data)
     subroutine click_callback(widget, client_data, call_data) bind(c)
         !! Xt callback routine for `XM_N_ACTIVATE_CALLBACK` that will be
-        !! executed each the user clicks the button.
+        !! executed each time the user clicks the button.
         type(c_ptr), intent(in), value :: widget
         type(c_ptr), intent(in), value :: client_data
         type(c_ptr), intent(in), value :: call_data

@@ -8,17 +8,6 @@ module xt
     use, intrinsic :: iso_c_binding
     implicit none
     private
-    public :: APPLICATION_SHELL_WIDGET_CLASS
-    public :: SESSION_SHELL_WIDGET_CLASS
-    public :: TRANSIENT_SHELL_WIDGET_CLASS
-
-    public :: XT_GRAB_NONE
-    public :: XT_GRAB_NONEXCLUSIVE
-    public :: XT_GRAB_EXCLUSIVE
-
-    public :: xt_arg
-    public :: xt_set_arg
-
     public :: xt_add_callback
     public :: xt_app_main_loop
     public :: xt_app_pending
@@ -33,14 +22,17 @@ module xt
     public :: xt_realize_widget
     public :: xt_resize_widget
     public :: xt_screen
+    public :: xt_set_arg
     public :: xt_set_language_proc
     public :: xt_set_values
     public :: xt_window
 
-    type, bind(c) :: xt_arg
+    type, bind(c), public :: xt_arg
         type(c_ptr)          :: name
         integer(kind=c_long) :: value
     end type xt_arg
+
+    public :: XT_GRAB_NONE, XT_GRAB_NONEXCLUSIVE, XT_GRAB_EXCLUSIVE
 
     enum, bind(c)
         enumerator :: XT_GRAB_NONE
@@ -48,9 +40,9 @@ module xt
         enumerator :: XT_GRAB_EXCLUSIVE
     end enum
 
-    type(c_ptr), bind(c, name='applicationShellWidgetClass') :: APPLICATION_SHELL_WIDGET_CLASS
-    type(c_ptr), bind(c, name='sessionShellWidgetClass')     :: SESSION_SHELL_WIDGET_CLASS
-    type(c_ptr), bind(c, name='transientShellWidgetClass')   :: TRANSIENT_SHELL_WIDGET_CLASS
+    type(c_ptr), bind(c, name='applicationShellWidgetClass'), public :: APPLICATION_SHELL_WIDGET_CLASS
+    type(c_ptr), bind(c, name='sessionShellWidgetClass'),     public :: SESSION_SHELL_WIDGET_CLASS
+    type(c_ptr), bind(c, name='transientShellWidgetClass'),   public :: TRANSIENT_SHELL_WIDGET_CLASS
 
     ! Function overloading of `xt_set_arg()`.
     interface xt_set_arg

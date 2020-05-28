@@ -7,7 +7,6 @@
 module xlib
     use, intrinsic :: iso_c_binding
     implicit none
-
     public :: x_create_font_cursor
     public :: x_define_cursor
     public :: x_flush

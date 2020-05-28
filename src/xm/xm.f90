@@ -8,60 +8,6 @@ module xm
     use, intrinsic :: iso_c_binding
     implicit none
     private
-
-    public :: XM_ALIGNMENT_BEGINNING
-    public :: XM_ALIGNMENT_CENTER
-    public :: XM_ALIGNMENT_END
-    public :: XM_ALIGNMENT_UNSPECIFIED
-
-    public :: XM_ALIGNMENT_BASELINE_TOP
-    public :: XM_ALIGNMENT_BASELINE_BOTTOM
-    public :: XM_ALIGNMENT_WIDGET_TOP
-    public :: XM_ALIGNMENT_WIDGET_BOTTOM
-
-    public :: XM_ARROW_UP
-    public :: XM_ARROW_DOWN
-    public :: XM_ARROW_LEFT
-    public :: XM_ARROW_RIGHT
-
-    public :: XM_ATTACH_NONE
-    public :: XM_ATTACH_FORM
-    public :: XM_ATTACH_OPPOSITE_FORM
-    public :: XM_ATTACH_WIDGET
-    public :: XM_ATTACH_OPPOSITE_WIDGET
-    public :: XM_ATTACH_POSITION
-    public :: XM_ATTACH_SELF
-
-    public :: XM_NO_PACKING
-    public :: XM_PACK_TIGHT
-    public :: XM_PACK_COLUMN
-    public :: XM_PACK_NONE
-
-    public :: XM_PIXMAP
-    public :: XM_PIXMAP_AND_STRING
-
-    public :: XM_RESIZE_NONE
-    public :: XM_RESIZE_GROW
-    public :: XM_RESIZE_ANY
-
-    public :: XM_SHADOW_IN
-    public :: XM_SHADOW_OUT
-
-    public :: XM_NO_LINE
-    public :: XM_SINGLE_LINE
-    public :: XM_DOUBLE_LINE
-    public :: XM_SINGLE_DASHED_LINE
-    public :: XM_DOUBLE_DASHED_LINE
-    public :: XM_SHADOW_ETCHED_IN
-    public :: XM_SHADOW_ETCHED_OUT
-    public :: XM_SHADOW_ETCHED_IN_DASH
-    public :: XM_SHADOW_ETCHED_OUT_DASH
-    public :: XM_INVALID_SEPARATOR_TYPE
-
-    public :: XM_DESTROY
-    public :: XM_UNMAP
-    public :: XM_DO_NOTHING
-
     public :: xm_add_protocol_callback
     public :: xm_create_dialog_shell
     public :: xm_create_menu_bar
@@ -89,12 +35,17 @@ module xm
 
     integer(kind=c_int), parameter, public :: XM_UNSPECIFIED_PIXMAP = 2
 
+    public :: XM_ALIGNMENT_BEGINNING, XM_ALIGNMENT_CENTER, XM_ALIGNMENT_END, XM_ALIGNMENT_UNSPECIFIED
+
     enum, bind(c)
         enumerator :: XM_ALIGNMENT_BEGINNING
         enumerator :: XM_ALIGNMENT_CENTER
         enumerator :: XM_ALIGNMENT_END
         enumerator :: XM_ALIGNMENT_UNSPECIFIED
     end enum
+
+    public :: XM_ALIGNMENT_BASELINE_TOP, XM_ALIGNMENT_BASELINE_BOTTOM, XM_ALIGNMENT_WIDGET_TOP, &
+              XM_ALIGNMENT_WIDGET_BOTTOM
 
     enum, bind(c)
         enumerator :: XM_ALIGNMENT_BASELINE_TOP
@@ -103,12 +54,17 @@ module xm
         enumerator :: XM_ALIGNMENT_WIDGET_BOTTOM
     end enum
 
+    public :: XM_ARROW_UP, XM_ARROW_DOWN, XM_ARROW_LEFT, XM_ARROW_RIGHT
+
     enum, bind(c)
         enumerator :: XM_ARROW_UP
         enumerator :: XM_ARROW_DOWN
         enumerator :: XM_ARROW_LEFT
         enumerator :: XM_ARROW_RIGHT
     end enum
+
+    public :: XM_ATTACH_NONE, XM_ATTACH_FORM, XM_ATTACH_OPPOSITE_FORM, XM_ATTACH_WIDGET, XM_ATTACH_OPPOSITE_WIDGET, &
+              XM_ATTACH_POSITION, XM_ATTACH_SELF
 
     enum, bind(c)
         enumerator :: XM_ATTACH_NONE
@@ -120,11 +76,15 @@ module xm
         enumerator :: XM_ATTACH_SELF
     end enum
 
+    public :: XM_DESTROY, XM_UNMAP, XM_DO_NOTHING
+
     enum, bind(c)
         enumerator :: XM_DESTROY
         enumerator :: XM_UNMAP
         enumerator :: XM_DO_NOTHING
     end enum
+
+    public :: XM_NO_PACKING, XM_PACK_TIGHT, XM_PACK_COLUMN, XM_PACK_NONE
 
     enum, bind(c)
         enumerator :: XM_NO_PACKING
@@ -133,10 +93,14 @@ module xm
         enumerator :: XM_PACK_NONE
     end enum
 
+    public :: XM_PIXMAP, XM_PIXMAP_AND_STRING
+
     enum, bind(c)
         enumerator :: XM_PIXMAP = 1
         enumerator :: XM_PIXMAP_AND_STRING
     end enum
+
+    public :: XM_RESIZE_NONE, XM_RESIZE_GROW, XM_RESIZE_ANY
 
     enum, bind(c)
         enumerator :: XM_RESIZE_NONE
@@ -144,10 +108,15 @@ module xm
         enumerator :: XM_RESIZE_ANY
     end enum
 
+    public :: XM_SHADOW_IN, XM_SHADOW_OUT
+
     enum, bind(c)
         enumerator :: XM_SHADOW_IN = 7
         enumerator :: XM_SHADOW_OUT
     end enum
+
+    public :: XM_NO_LINE, XM_SINGLE_LINE, XM_DOUBLE_LINE, XM_SINGLE_DASHED_LINE, XM_DOUBLE_DASHED_LINE, XM_SHADOW_ETCHED_IN, &
+              XM_SHADOW_ETCHED_OUT, XM_SHADOW_ETCHED_IN_DASH, XM_SHADOW_ETCHED_OUT_DASH, XM_INVALID_SEPARATOR_TYPE
 
     enum, bind(c)
         enumerator :: XM_NO_LINE
