@@ -1,6 +1,6 @@
-! click.f90
+! bitmap.f90
 !
-! Example Fortran application that shows an XBM image inside an XmLabel.
+! Example Fortran application that shows an XBM image inside an XmLabel widget.
 !
 ! Author:  Philipp Engel
 ! Licence: ISC
