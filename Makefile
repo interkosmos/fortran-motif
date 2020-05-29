@@ -5,7 +5,7 @@ FC      = gfortran
 PREFIX  = /usr/local
 DEBUG   = # -ggdb3 -O0
 
-FFLAGS  = $(DEBUG) -Wall -std=f2008 -fmax-errors=1 -fcheck=all -Wno-unused-dummy-argument
+FFLAGS  = $(DEBUG) -Wall -Wno-unused-dummy-argument -std=f2008 -fmax-errors=1 -fcheck=all
 LDFLAGS = -I$(PREFIX)/include/ -L$(PREFIX)/lib/
 LDLIBS  = -lXm -lXt -lX11 -lXpm
 

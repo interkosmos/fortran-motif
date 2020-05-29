@@ -23,7 +23,7 @@ Build `fortran-motif` with the provided `Makefile` and (optional) arguments:
 $ make
 ```
 
-You probably want to set the argument `PREFIX=/usr/local` on Linux.
+You probably want to set the argument `PREFIX=/usr` on Linux.
 
 ## Examples
 See directory `examples/` for Motif applications written in Fortran:
