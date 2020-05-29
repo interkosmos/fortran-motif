@@ -258,7 +258,7 @@ module xm
             type(c_ptr)                    :: xm_text_field_get_string_
         end function xm_text_field_get_string_
 
-        ! XmAddProtocolCallback(Widget shell, Atom property, Atom proto_atom, XtCallbackProc callback, XtPointer closure)
+        ! void XmAddProtocolCallback(Widget shell, Atom property, Atom proto_atom, XtCallbackProc callback, XtPointer closure)
         subroutine xm_add_protocol_callback(shell, property, proto_atom, callback, closure) bind(c, name='XmAddProtocolCallback')
             import :: c_funptr, c_long, c_ptr
             type(c_ptr),          intent(in), value :: shell

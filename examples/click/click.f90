@@ -25,13 +25,14 @@ contains
         type(c_ptr)                    :: string_ptr, title_ptr
         type(xt_arg), target           :: args(2)
 
-        if (.not. c_associated(call_data)) return
+        if (.not. c_associated(client_data)) return
 
         title_ptr  = xm_string_create_localized('Hi, there!' // c_null_char)
         string_ptr = xm_string_create_localized('You clicked me!' // c_null_char)
 
         call xt_set_arg(args(1), XM_N_DIALOG_TITLE,   title_ptr)
         call xt_set_arg(args(2), XM_N_MESSAGE_STRING, string_ptr)
+
         dialog_ptr = xm_create_message_dialog(client_data, &
                                               'Message' // c_null_char, &
                                               c_loc(args), &
@@ -105,6 +106,7 @@ program main
 
     ! Create XmPushButton widget.
     button_ptr = create_push_button(form_ptr, 'Click me!', c_funloc(click_callback), window_ptr)
+
     call xt_set_arg(args(1), XM_N_LEFT_ATTACHMENT, XM_ATTACH_FORM)
     call xt_set_arg(args(2), XM_N_TOP_ATTACHMENT,  XM_ATTACH_FORM)
     call xt_set_arg(args(3), XM_N_MARGIN_HEIGHT,   5)
@@ -119,10 +121,11 @@ program main
     call xt_realize_widget(window_ptr)
     call add_window_delete_callback(window_ptr, c_funloc(quit_callback), c_null_ptr)
 
+    ! Run main loop.
     call xt_app_main_loop(app_ptr)
 contains
     function create_push_button(parent, name, callback, client_data) result(widget)
-        !! Helper function that returns a new PushButton widget.
+        !! Helper function that returns a new XmPushButton widget.
         type(c_ptr),      intent(in) :: parent
         character(len=*), intent(in) :: name
         type(c_funptr),   intent(in) :: callback
@@ -145,7 +148,7 @@ contains
                              client_data)
     end function create_push_button
 
-    subroutine add_window_delete_callback(widget, callback, client_data) bind(c)
+    subroutine add_window_delete_callback(widget, callback, client_data)
         !! Adds Xt callback routine that will be invoked when the user closes
         !! the window.
         type(c_ptr),    intent(in) :: widget

@@ -1,6 +1,6 @@
 # fortran-motif
 A collection of ISO C binding interfaces to X/Motif, to create graphical user
-interfaces for Unix in Fortran 2008.  Currently, `fortran-motif` is just a proof
+interfaces for Unix in Fortran 2008. Currently, `fortran-motif` is just a proof
 of concept.
 
 ## Dependencies
@@ -28,6 +28,7 @@ You probably want to set the argument `PREFIX=/usr/local` on Linux.
 ## Examples
 See directory `examples/` for Motif applications written in Fortran:
 
+* **bitmap** shows an XBM bitmap.
 * **click** displays an XmPushButton widget inside an XmForm widget.
 
 Compile a particular example with:

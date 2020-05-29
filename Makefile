@@ -9,13 +9,14 @@ FFLAGS  = $(DEBUG) -Wall -std=f2008 -fmax-errors=1 -fcheck=all -Wno-unused-dummy
 LDFLAGS = -I$(PREFIX)/include/ -L$(PREFIX)/lib/
 LDLIBS  = -lXm -lXt -lX11 -lXpm
 
-XLIB    = xlib
-XT      = xt
-XM      = xm
+XLIB    = xlib.o
+XT      = xt.o
+XM      = xm.o
 
-CLICK   = click
+BITMAP  = examples/bitmap/bitmap
+CLICK   = examples/click/click
 
-.PHONY: all clean $(CLICK) $(XLIB) $(XM) $(XT)
+.PHONY: all bitmap clean click
 
 all: $(XLIB) $(XM) $(XT)
 
@@ -28,9 +29,13 @@ $(XM):
 $(XT):
 	$(FC) $(FFLAGS) -c src/xt/xt.f90
 
-$(CLICK): $(XLIB) $(XM) $(XT)
-	$(FC) $(FFLAGS) $(LDFLAGS) -o click examples/click/click.f90 xlib.o xm.o xt.o $(LDLIBS)
+bitmap: $(XLIB) $(XM) $(XT)
+	$(FC) $(FFLAGS) $(LDFLAGS) -o $(BITMAP) $(BITMAP).f90 $(XLIB) $(XM) $(XT) $(LDLIBS)
+
+click: $(XLIB) $(XM) $(XT)
+	$(FC) $(FFLAGS) $(LDFLAGS) -o $(CLICK) $(CLICK).f90 $(XLIB) $(XM) $(XT) $(LDLIBS)
 
 clean:
 	rm *.mod *.o
+	rm $(BITMAP)
 	rm $(CLICK)
