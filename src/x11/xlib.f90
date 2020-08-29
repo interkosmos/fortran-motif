@@ -7,11 +7,14 @@
 module xlib
     use, intrinsic :: iso_c_binding
     implicit none
+    public :: x_black_pixel
     public :: x_create_font_cursor
+    public :: x_default_screen
     public :: x_define_cursor
     public :: x_flush
     public :: x_init_threads
     public :: x_undefine_cursor
+    public :: x_white_pixel
 
     integer(kind=c_int), parameter, public :: XC_X_CURSOR            = 0
     integer(kind=c_int), parameter, public :: XC_ARROW               = 2
@@ -92,6 +95,14 @@ module xlib
     integer(kind=c_int), parameter, public :: XC_XTERM               = 152
 
     interface
+        ! unsigned long XBlackPixel(Display *display, int screen_number)
+        function x_black_pixel(display, screen_number) bind(c, name='XBlackPixel')
+            import :: c_int, c_long, c_ptr
+            type(c_ptr),         intent(in), value :: display
+            integer(kind=c_int), intent(in), value :: screen_number
+            integer(kind=c_long)                   :: x_black_pixel
+        end function x_black_pixel
+
         ! Cursor XCreateFontCursor(Display *display, unsigned int shape)
         function x_create_font_cursor(display, shape) bind(c, name='XCreateFontCursor')
             import :: c_int, c_long, c_ptr
@@ -99,6 +110,13 @@ module xlib
             integer(kind=c_int), intent(in), value :: shape
             integer(kind=c_long)                   :: x_create_font_cursor
         end function x_create_font_cursor
+
+        ! int XDefaultScreen(Display *display)
+        function x_default_screen(display) bind(c, name='XDefaultScreen')
+            import :: c_int, c_ptr
+            type(c_ptr), intent(in), value :: display
+            integer(kind=c_int)            :: x_default_screen
+        end function x_default_screen
 
         ! int XDefineCursor(Display *display, Window w, Cursor cursor)
         function x_define_cursor(display, w, cursor) bind(c, name='XDefineCursor')
@@ -129,5 +147,13 @@ module xlib
             type(c_ptr),          intent(in), value :: w
             integer(kind=c_int)                     :: x_undefine_cursor
         end function x_undefine_cursor
+
+        ! unsigned long XWhitePixel(Display *display, int screen_number)
+        function x_white_pixel(display, screen_number) bind(c, name='XWhitePixel')
+            import :: c_int, c_long, c_ptr
+            type(c_ptr),         intent(in), value :: display
+            integer(kind=c_int), intent(in), value :: screen_number
+            integer(kind=c_long)                   :: x_white_pixel
+        end function x_white_pixel
     end interface
 end module xlib

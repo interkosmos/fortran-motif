@@ -9,6 +9,7 @@ module xt
     implicit none
     private
     public :: xt_add_callback
+    public :: xt_add_event_handler
     public :: xt_app_main_loop
     public :: xt_app_pending
     public :: xt_create_managed_widget
@@ -43,6 +44,33 @@ module xt
     type(c_ptr), bind(c, name='applicationShellWidgetClass'), public :: APPLICATION_SHELL_WIDGET_CLASS
     type(c_ptr), bind(c, name='sessionShellWidgetClass'),     public :: SESSION_SHELL_WIDGET_CLASS
     type(c_ptr), bind(c, name='transientShellWidgetClass'),   public :: TRANSIENT_SHELL_WIDGET_CLASS
+
+    integer(kind=c_long), parameter, public :: NO_EVENT_MASK              = 0
+    integer(kind=c_long), parameter, public :: KEY_PRESS_MASK             = ishft(1, 0)
+    integer(kind=c_long), parameter, public :: KEY_RELEASE_MASK           = ishft(1, 1)
+    integer(kind=c_long), parameter, public :: BUTTON_PRESS_MASK          = ishft(1, 2)
+    integer(kind=c_long), parameter, public :: BUTTON_RELEASE_MASK        = ishft(1, 3)
+    integer(kind=c_long), parameter, public :: ENTER_WINDOW_MASK          = ishft(1, 4)
+    integer(kind=c_long), parameter, public :: LEAVE_WINDOW_MASK          = ishft(1, 5)
+    integer(kind=c_long), parameter, public :: POINTER_MOTION_MASK        = ishft(1, 6)
+    integer(kind=c_long), parameter, public :: POINTER_MOTION_HINT_MASK   = ishft(1, 7)
+    integer(kind=c_long), parameter, public :: BUTTON1_MOTION_MASK        = ishft(1, 8)
+    integer(kind=c_long), parameter, public :: BUTTON2_MOTION_MASK        = ishft(1, 9)
+    integer(kind=c_long), parameter, public :: BUTTON3_MOTION_MASK        = ishft(1, 10)
+    integer(kind=c_long), parameter, public :: BUTTON4_MOTION_MASK        = ishft(1, 11)
+    integer(kind=c_long), parameter, public :: BUTTON5_MOTION_MASK        = ishft(1, 12)
+    integer(kind=c_long), parameter, public :: BUTTON_MOTION_MASK         = ishft(1, 13)
+    integer(kind=c_long), parameter, public :: KEYMAP_STATE_MASK          = ishft(1, 14)
+    integer(kind=c_long), parameter, public :: EXPOSURE_MASK              = ishft(1, 15)
+    integer(kind=c_long), parameter, public :: VISIBILITY_CHANGE_MASK     = ishft(1, 16)
+    integer(kind=c_long), parameter, public :: STRUCTURE_NOTIFY_MASK      = ishft(1, 17)
+    integer(kind=c_long), parameter, public :: RESIZE_REDIRECT_MASK       = ishft(1, 18)
+    integer(kind=c_long), parameter, public :: SUBSTRUCTURE_NOTIFY_MASK   = ishft(1, 19)
+    integer(kind=c_long), parameter, public :: SUBSTRUCTURE_REDIRECT_MASK = ishft(1, 20)
+    integer(kind=c_long), parameter, public :: FOCUS_CHANGE_MASK          = ishft(1, 21)
+    integer(kind=c_long), parameter, public :: PROPERTY_CHANGE_MASK       = ishft(1, 22)
+    integer(kind=c_long), parameter, public :: COLORMAP_CHANGE_MASK       = ishft(1, 23)
+    integer(kind=c_long), parameter, public :: OWNER_GRAB_BUTTON_MASK     = ishft(1, 24)
 
     ! Function overloading of `xt_set_arg()`.
     interface xt_set_arg
@@ -141,6 +169,16 @@ module xt
             type(c_funptr),                intent(in), value :: callback
             type(c_ptr),                   intent(in), value :: client_data
         end subroutine xt_add_callback
+
+        ! void XtAddEventHandler(Widget w, EventMask event_mask, Boolean nonmaskable, XtEventHandler proc, XtPointer client_data)
+        subroutine xt_add_event_handler(w, event_mask, nonmaskable, proc, client_data) bind(c, name='XtAddEventHandler')
+            import :: c_bool, c_funptr, c_long, c_ptr
+            type(c_ptr),                   intent(in), value :: w
+            integer(kind=c_long),          intent(in), value :: event_mask
+            logical(kind=c_bool),          intent(in), value :: nonmaskable
+            type(c_funptr),                intent(in), value :: proc
+            type(c_ptr),                   intent(in), value :: client_data
+        end subroutine xt_add_event_handler
 
         ! void XtAppMainLoop(XtAppContext app_context)
         subroutine xt_app_main_loop(app_context) bind(c, name='XtAppMainLoop')

@@ -1,24 +1,28 @@
 .POSIX:
 .SUFFIXES:
 
-FC      = gfortran
-PREFIX  = /usr/local
-DEBUG   = # -ggdb3 -O0
+FC       = gfortran
+AR       = ar
+PREFIX   = /usr/local
+DEBUG    = # -ggdb3 -O0
 
-FFLAGS  = $(DEBUG) -Wall -Wno-unused-dummy-argument -std=f2008 -fmax-errors=1 -fcheck=all
-LDFLAGS = -I$(PREFIX)/include/ -L$(PREFIX)/lib/
-LDLIBS  = -lXm -lXt -lX11 -lXpm
+FFLAGS   = $(DEBUG) -Wall -Wno-unused-dummy-argument -std=f2008 -fmax-errors=1 -fcheck=all
+LDFLAGS  = -I$(PREFIX)/include/ -L$(PREFIX)/lib/
+LDLIBS   = -lXm -lXt -lX11 -lXpm
+ARFLAGS  = -cr
 
-XLIB    = xlib.o
-XT      = xt.o
-XM      = xm.o
+XLIB     = xlib.o
+XT       = xt.o
+XM       = xm.o
+TARGET   = libfortran-motif.a
 
-BITMAP  = examples/bitmap/bitmap
-CLICK   = examples/click/click
+BITMAP   = examples/bitmap/bitmap
+CLICK    = examples/click/click
 
 .PHONY: all bitmap clean click
 
 all: $(XLIB) $(XM) $(XT)
+	$(AR) $(ARFLAGS) $(TARGET) xlib.o xm.o xt.o
 
 $(XLIB):
 	$(FC) $(FFLAGS) -c src/x11/xlib.f90
@@ -37,5 +41,6 @@ click: $(XLIB) $(XM) $(XT)
 
 clean:
 	rm *.mod *.o
+	rm $(TARGET)
 	rm $(BITMAP)
 	rm $(CLICK)

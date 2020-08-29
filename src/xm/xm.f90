@@ -21,6 +21,7 @@ module xm
     public :: xm_text_field_set_string
 
     type(c_ptr), bind(c, name='xmArrowButtonGadgetClass'),   public :: XM_ARROW_BUTTON_GADGET_CLASS
+    type(c_ptr), bind(c, name='xmBulletinBoardWidgetClass'), public :: XM_BULLETIN_BOARD_WIDGET_CLASS
     type(c_ptr), bind(c, name='xmCascadeButtonWidgetClass'), public :: XM_CASCADE_BUTTON_WIDGET_CLASS
     type(c_ptr), bind(c, name='xmDialogShellWidgetClass'),   public :: XM_DIALOG_SHELL_WIDGET_CLASS
     type(c_ptr), bind(c, name='xmFormWidgetClass'),          public :: XM_FORM_WIDGET_CLASS
@@ -142,6 +143,7 @@ module xm
     character(kind=c_char, len=*), parameter, public :: XM_N_CHILD_VERTICAL_ALIGNMENT = 'childVerticalAlignment' // c_null_char
     character(kind=c_char, len=*), parameter, public :: XM_N_DIALOG_TITLE             = 'dialogTitle' // c_null_char
     character(kind=c_char, len=*), parameter, public :: XM_N_DELETE_RESPONSE          = 'deleteResponse' // c_null_char
+    character(kind=c_char, len=*), parameter, public :: XM_N_FOCUS_CALLBACK           = 'focusCallback' // c_null_char
     character(kind=c_char, len=*), parameter, public :: XM_N_FONT_FAMILY              = 'fontFamily' // c_null_char
     character(kind=c_char, len=*), parameter, public :: XM_N_FONT_SIZE_FIXED_LIST     = 'fontSizeFixedList' // c_null_char
     character(kind=c_char, len=*), parameter, public :: XM_N_FONT_SIZE_LIST           = 'fontSizeList' // c_null_char
