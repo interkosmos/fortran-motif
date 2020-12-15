@@ -45,10 +45,12 @@ See directory `examples/` for Motif applications written in Fortran:
 * **click** displays an XmPushButton widget inside an XmForm widget.
 * **www** shows an XmHTML widget with HTML 3.2 content.
 
-Compile a particular example with:
+Compile and run a particular example with:
 
 ```
 $ make <name>
+$ cd examples/<name>/
+$ ./<name>
 ```
 
 ## Licence

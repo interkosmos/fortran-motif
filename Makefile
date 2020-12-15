@@ -44,10 +44,10 @@ $(XMHTML):
 	$(FC) $(FFLAGS) -c src/xmhtml/xmhtml.f90
 
 # Examples.
-bitmap: $(TARGET)
+bitmap: motif
 	$(FC) $(FFLAGS) $(LDFLAGS) -o $(BITMAP) $(BITMAP).f90 $(TARGET) $(LDLIBS) -lXpm
 
-click: $(TARGET)
+click: motif
 	$(FC) $(FFLAGS) $(LDFLAGS) -o $(CLICK) $(CLICK).f90 $(TARGET) $(LDLIBS)
 
 www: all
