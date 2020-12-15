@@ -1,11 +1,13 @@
 # fortran-motif
 A collection of ISO C binding interfaces to X/Motif, to create graphical user
-interfaces for Unix in Fortran 2008. Currently, `fortran-motif` is just a proof
-of concept.
+interfaces for Unix in Fortran 2008. Currently, *fortran-motif* is just a proof
+of concept. The library includes selected bindings to Xlib, Xt, Xm, and the
+[XmHTML](https://sourceforge.net/projects/xmhtml/) widget to render HTML 3.2
+inside a Motif widget (optional).
 
 ## Dependencies
-The interfaces require either [Motif](https://en.wikipedia.org/wiki/Motif_(software))
-or [LessTif](https://en.wikipedia.org/wiki/LessTif).
+Either use [Motif](https://en.wikipedia.org/wiki/Motif_(software)) or
+[LessTif](https://en.wikipedia.org/wiki/LessTif).
 
 On FreeBSD, install Open Motif with:
 
@@ -13,17 +15,28 @@ On FreeBSD, install Open Motif with:
 # pkg install x11-toolkits/open-motif
 ```
 
-On Linux, you may have to install additional development headers.
+On Linux, additional development headers may be required. If you want to
+use the XmHTML widget, install:
+
+```
+# pkg install x11-toolkits/xmhtml
+```
 
 ## Compilation
-The compilation has been tested on FreeBSD 12 with Open Motif and GNU Fortran 9.
-Build `fortran-motif` with the provided `Makefile` and (optional) arguments:
+The compilation has been tested on FreeBSD 12 with Open Motif and GNU Fortran
+10.  Build *fortran-motif* with the provided `Makefile` and (optional)
+arguments:
 
 ```
-$ make
+$ make motif
 ```
 
-You probably want to set the argument `PREFIX=/usr` on Linux.
+You probably want to add the argument `PREFIX=/usr` on Linux. In order to
+include bindings to the XmHTML widget, run:
+
+```
+$ make all
+```
 
 ## Examples
 See directory `examples/` for Motif applications written in Fortran:

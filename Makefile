@@ -1,27 +1,32 @@
 .POSIX:
 .SUFFIXES:
 
-FC       = gfortran
-AR       = ar
-PREFIX   = /usr/local
-DEBUG    = # -ggdb3 -O0
+CC      = gcc
+FC      = gfortran
+AR      = ar
+PREFIX  = /usr/local
+DEBUG   = # -ggdb3 -O0
 
-FFLAGS   = $(DEBUG) -Wall -Wno-unused-dummy-argument -std=f2008 -fmax-errors=1 -fcheck=all
-LDFLAGS  = -I$(PREFIX)/include/ -L$(PREFIX)/lib/
-LDLIBS   = -lXm -lXt -lX11 -lXpm
-ARFLAGS  = -cr
+FFLAGS  = $(DEBUG) -Wall -Wno-unused-dummy-argument -std=f2008 -fmax-errors=1 -fcheck=all
+LDFLAGS = -I$(PREFIX)/include/ -L$(PREFIX)/lib/
+LDLIBS  = -lXm -lXt -lX11
+ARFLAGS = -cr
 
-XLIB     = xlib.o
-XT       = xt.o
-XM       = xm.o
-TARGET   = libfortran-motif.a
+XLIB    = xlib.o
+XT      = xt.o
+XM      = xm.o
+XMHTML  = xmhtml.o
+TARGET  = libfortran-motif.a
 
-BITMAP   = examples/bitmap/bitmap
-CLICK    = examples/click/click
+BITMAP  = examples/bitmap/bitmap
+CLICK   = examples/click/click
 
-.PHONY: all bitmap clean click
+.PHONY: all bitmap clean click xmhtml
 
-all: $(XLIB) $(XM) $(XT)
+all: $(XLIB) $(XM) $(XT) $(XMHTML)
+	$(AR) $(ARFLAGS) $(TARGET) xlib.o xm.o xt.o xmhtml.o
+
+motif: $(XLIB) $(XM) $(XT)
 	$(AR) $(ARFLAGS) $(TARGET) xlib.o xm.o xt.o
 
 $(XLIB):
@@ -33,14 +38,16 @@ $(XM):
 $(XT):
 	$(FC) $(FFLAGS) -c src/xt/xt.f90
 
+$(XMHTML):
+	$(FC) $(FFLAGS) -c src/xmhtml/xmhtml.f90
+
 bitmap: $(XLIB) $(XM) $(XT)
-	$(FC) $(FFLAGS) $(LDFLAGS) -o $(BITMAP) $(BITMAP).f90 $(XLIB) $(XM) $(XT) $(LDLIBS)
+	$(FC) $(FFLAGS) $(LDFLAGS) -o $(BITMAP) $(BITMAP).f90 $(TARGET) $(LDLIBS) -lXpm
 
 click: $(XLIB) $(XM) $(XT)
-	$(FC) $(FFLAGS) $(LDFLAGS) -o $(CLICK) $(CLICK).f90 $(XLIB) $(XM) $(XT) $(LDLIBS)
+	$(FC) $(FFLAGS) $(LDFLAGS) -o $(CLICK) $(CLICK).f90 $(TARGET) $(LDLIBS)
 
 clean:
-	rm *.mod *.o
-	rm $(TARGET)
-	rm $(BITMAP)
-	rm $(CLICK)
+	rm *.mod *.o *.a
+	if [ -e $(BITMAP) ]; then rm $(BITMAP); fi
+	if [ -e $(CLICK) ]; then rm $(CLICK); fi
