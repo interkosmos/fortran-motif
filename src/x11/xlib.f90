@@ -7,14 +7,6 @@
 module xlib
     use, intrinsic :: iso_c_binding
     implicit none
-    public :: x_black_pixel
-    public :: x_create_font_cursor
-    public :: x_default_screen
-    public :: x_define_cursor
-    public :: x_flush
-    public :: x_init_threads
-    public :: x_undefine_cursor
-    public :: x_white_pixel
 
     integer(kind=c_int), parameter, public :: XC_X_CURSOR            = 0
     integer(kind=c_int), parameter, public :: XC_ARROW               = 2
@@ -93,6 +85,15 @@ module xlib
     integer(kind=c_int), parameter, public :: XC_UR_ANGLE            = 148
     integer(kind=c_int), parameter, public :: XC_WATCH               = 150
     integer(kind=c_int), parameter, public :: XC_XTERM               = 152
+
+    public :: x_black_pixel
+    public :: x_create_font_cursor
+    public :: x_default_screen
+    public :: x_define_cursor
+    public :: x_flush
+    public :: x_init_threads
+    public :: x_undefine_cursor
+    public :: x_white_pixel
 
     interface
         ! unsigned long XBlackPixel(Display *display, int screen_number)

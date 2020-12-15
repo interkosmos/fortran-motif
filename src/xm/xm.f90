@@ -8,17 +8,8 @@ module xm
     use, intrinsic :: iso_c_binding
     implicit none
     private
-    public :: xm_add_protocol_callback
-    public :: xm_create_dialog_shell
-    public :: xm_create_menu_bar
-    public :: xm_create_message_dialog
-    public :: xm_create_pulldown_menu
-    public :: xm_get_pixmap
-    public :: xm_intern_atom
-    public :: xm_string_create_localized
-    public :: xm_string_free
-    public :: xm_text_field_get_string
-    public :: xm_text_field_set_string
+
+    integer(kind=c_int), parameter, public :: XM_UNSPECIFIED_PIXMAP = 2
 
     type(c_ptr), bind(c, name='xmArrowButtonGadgetClass'),   public :: XM_ARROW_BUTTON_GADGET_CLASS
     type(c_ptr), bind(c, name='xmBulletinBoardWidgetClass'), public :: XM_BULLETIN_BOARD_WIDGET_CLASS
@@ -33,8 +24,6 @@ module xm
     type(c_ptr), bind(c, name='xmPushButtonWidgetClass'),    public :: XM_PUSH_BUTTON_WIDGET_CLASS
     type(c_ptr), bind(c, name='xmRowColumnWidgetClass'),     public :: XM_ROW_COLUMN_WIDGET_CLASS
     type(c_ptr), bind(c, name='xmTextFieldWidgetClass'),     public :: XM_TEXT_FIELD_WIDGET_CLASS
-
-    integer(kind=c_int), parameter, public :: XM_UNSPECIFIED_PIXMAP = 2
 
     public :: XM_ALIGNMENT_BEGINNING, XM_ALIGNMENT_CENTER, XM_ALIGNMENT_END, XM_ALIGNMENT_UNSPECIFIED
 
@@ -185,6 +174,18 @@ module xm
     character(kind=c_char, len=*), parameter, public :: XM_N_WIDTH                    = 'width' // c_null_char
     character(kind=c_char, len=*), parameter, public :: XM_N_X                         = 'x' // c_null_char
     character(kind=c_char, len=*), parameter, public :: XM_N_Y                         = 'y' // c_null_char
+
+    public :: xm_add_protocol_callback
+    public :: xm_create_dialog_shell
+    public :: xm_create_menu_bar
+    public :: xm_create_message_dialog
+    public :: xm_create_pulldown_menu
+    public :: xm_get_pixmap
+    public :: xm_intern_atom
+    public :: xm_string_create_localized
+    public :: xm_string_free
+    public :: xm_text_field_get_string
+    public :: xm_text_field_set_string
 
     interface
         ! Widget XmCreateDialogShell(Widget parent, String name, ArgList arglist, Cardinal argcount)

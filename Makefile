@@ -20,8 +20,9 @@ TARGET  = libfortran-motif.a
 
 BITMAP  = examples/bitmap/bitmap
 CLICK   = examples/click/click
+WWW     = examples/www/www
 
-.PHONY: all bitmap clean click xmhtml
+.PHONY: all bitmap clean click www xmhtml
 
 all: $(XLIB) $(XM) $(XT) $(XMHTML)
 	$(AR) $(ARFLAGS) $(TARGET) xlib.o xm.o xt.o xmhtml.o
@@ -29,6 +30,7 @@ all: $(XLIB) $(XM) $(XT) $(XMHTML)
 motif: $(XLIB) $(XM) $(XT)
 	$(AR) $(ARFLAGS) $(TARGET) xlib.o xm.o xt.o
 
+# Modules.
 $(XLIB):
 	$(FC) $(FFLAGS) -c src/x11/xlib.f90
 
@@ -41,13 +43,18 @@ $(XT):
 $(XMHTML):
 	$(FC) $(FFLAGS) -c src/xmhtml/xmhtml.f90
 
-bitmap: $(XLIB) $(XM) $(XT)
+# Examples.
+bitmap: $(TARGET)
 	$(FC) $(FFLAGS) $(LDFLAGS) -o $(BITMAP) $(BITMAP).f90 $(TARGET) $(LDLIBS) -lXpm
 
-click: $(XLIB) $(XM) $(XT)
+click: $(TARGET)
 	$(FC) $(FFLAGS) $(LDFLAGS) -o $(CLICK) $(CLICK).f90 $(TARGET) $(LDLIBS)
+
+www: all
+	$(FC) $(FFLAGS) $(LDFLAGS) -o $(WWW) $(WWW).f90 $(TARGET) $(LDLIBS) -lXpm -lXmHTML
 
 clean:
 	rm *.mod *.o *.a
 	if [ -e $(BITMAP) ]; then rm $(BITMAP); fi
 	if [ -e $(CLICK) ]; then rm $(CLICK); fi
+	if [ -e $(WWW) ]; then rm $(WWW); fi

@@ -5,22 +5,11 @@
 ! Author:  Philipp Engel
 ! Licence: ISC
 module xmhtml
-    use, intrinsic :: iso_c_binding, only: c_bool, c_char, c_float, c_int, c_null_char, c_ptr, c_short
+    use, intrinsic :: iso_c_binding
     implicit none
     private
-    public :: XMHTML_NONE
-    public :: XMHTML_UNKNOWN_ELEMENT
-    public :: XMHTML_BAD
-    public :: XMHTML_OPEN_BLOCK
-    public :: XMHTML_CLOSE_BLOCK
-    public :: XMHTML_OPEN_ELEMENT
-    public :: XMHTML_NESTED
-    public :: XMHTML_VIOLATION
-    public :: XMHTML_ALL
 
-    public :: XM_HTML_WIDGET_CLASS
-    public :: xm_html_anchor_callback_struct
-    public :: xm_html_text_set_string
+    type(c_ptr), bind(c, name='xmHTMLWidgetClass'), public :: XM_HTML_WIDGET_CLASS
 
     character(kind=c_char, len=*), parameter, public :: XM_N_ANCHOR_BUTTONS           = 'anchorButtons' // c_null_char
     character(kind=c_char, len=*), parameter, public :: XM_N_ANCHOR_UNDERLINE_TYPE    = 'anchorUnderlineType' // c_null_char
@@ -34,6 +23,9 @@ module xmhtml
     character(kind=c_char, len=*), parameter, public :: XM_N_RESIZE_WIDTH             = 'resizeWidth' // c_null_char
     character(kind=c_char, len=*), parameter, public :: XM_N_SMOOTH_SCROLLING         = 'smoothScrolling' // c_null_char
 
+    public :: XMHTML_NONE, XMHTML_UNKNOWN_ELEMENT, XMHTML_BAD, XMHTML_OPEN_BLOCK, XMHTML_CLOSE_BLOCK, &
+              XMHTML_OPEN_ELEMENT, XMHTML_NESTED, XMHTML_VIOLATION, XMHTML_ALL
+
     enum, bind(c)
         enumerator :: XMHTML_NONE            = 0
         enumerator :: XMHTML_UNKNOWN_ELEMENT = 1
@@ -46,7 +38,7 @@ module xmhtml
         enumerator :: XMHTML_ALL             = 127
     end enum
 
-    type, bind(c) :: xm_html_anchor_callback_struct
+    type, bind(c), public :: xm_html_anchor_callback_struct
         integer(kind=c_int)  :: reason          ! The reason the callback was called.
         type(c_ptr)          :: event           ! Event structure that triggered callback.
         integer(kind=c_int)  :: url_type        ! Type of URL referenced.
@@ -62,7 +54,7 @@ module xmhtml
         logical(kind=c_bool) :: doc_modified    ! Set to True when document is modified.
     end type xm_html_anchor_callback_struct
 
-    type, bind(c) :: xm_image_info
+    type, bind(c), public :: xm_image_info
         type(c_ptr)            :: url           ! Original location of image.
         type(c_ptr)            :: data          ! Raw image data. ZPixmap format.
         type(c_ptr)            :: clip          ! Raw clipmask data. XYBitmap format.
@@ -93,7 +85,7 @@ module xmhtml
         type(c_ptr)            :: user_data     ! Any data to be stored with this image.
     end type xm_image_info
 
-    type(c_ptr), bind(c, name='xmHTMLWidgetClass') :: XM_HTML_WIDGET_CLASS
+    public :: xm_html_text_set_string
 
     interface
         ! void XmHTMLTextSetString(Widget html_w, char *value)

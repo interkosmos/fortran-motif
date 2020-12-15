@@ -8,25 +8,10 @@ module xt
     use, intrinsic :: iso_c_binding
     implicit none
     private
-    public :: xt_add_callback
-    public :: xt_add_event_handler
-    public :: xt_app_main_loop
-    public :: xt_app_pending
-    public :: xt_create_managed_widget
-    public :: xt_display
-    public :: xt_get_values
-    public :: xt_manage_child
-    public :: xt_open_application
-    public :: xt_parent
-    public :: xt_popdown
-    public :: xt_popup
-    public :: xt_realize_widget
-    public :: xt_resize_widget
-    public :: xt_screen
-    public :: xt_set_arg
-    public :: xt_set_language_proc
-    public :: xt_set_values
-    public :: xt_window
+
+    type(c_ptr), bind(c, name='applicationShellWidgetClass'), public :: APPLICATION_SHELL_WIDGET_CLASS
+    type(c_ptr), bind(c, name='sessionShellWidgetClass'),     public :: SESSION_SHELL_WIDGET_CLASS
+    type(c_ptr), bind(c, name='transientShellWidgetClass'),   public :: TRANSIENT_SHELL_WIDGET_CLASS
 
     type, bind(c), public :: xt_arg
         type(c_ptr)          :: name
@@ -40,10 +25,6 @@ module xt
         enumerator :: XT_GRAB_NONEXCLUSIVE
         enumerator :: XT_GRAB_EXCLUSIVE
     end enum
-
-    type(c_ptr), bind(c, name='applicationShellWidgetClass'), public :: APPLICATION_SHELL_WIDGET_CLASS
-    type(c_ptr), bind(c, name='sessionShellWidgetClass'),     public :: SESSION_SHELL_WIDGET_CLASS
-    type(c_ptr), bind(c, name='transientShellWidgetClass'),   public :: TRANSIENT_SHELL_WIDGET_CLASS
 
     integer(kind=c_long), parameter, public :: NO_EVENT_MASK              = 0
     integer(kind=c_long), parameter, public :: KEY_PRESS_MASK             = ishft(1, 0)
@@ -71,6 +52,26 @@ module xt
     integer(kind=c_long), parameter, public :: PROPERTY_CHANGE_MASK       = ishft(1, 22)
     integer(kind=c_long), parameter, public :: COLORMAP_CHANGE_MASK       = ishft(1, 23)
     integer(kind=c_long), parameter, public :: OWNER_GRAB_BUTTON_MASK     = ishft(1, 24)
+
+    public :: xt_add_callback
+    public :: xt_add_event_handler
+    public :: xt_app_main_loop
+    public :: xt_app_pending
+    public :: xt_create_managed_widget
+    public :: xt_display
+    public :: xt_get_values
+    public :: xt_manage_child
+    public :: xt_open_application
+    public :: xt_parent
+    public :: xt_popdown
+    public :: xt_popup
+    public :: xt_realize_widget
+    public :: xt_resize_widget
+    public :: xt_screen
+    public :: xt_set_arg
+    public :: xt_set_language_proc
+    public :: xt_set_values
+    public :: xt_window
 
     ! Function overloading of `xt_set_arg()`.
     interface xt_set_arg
