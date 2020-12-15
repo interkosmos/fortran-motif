@@ -43,7 +43,7 @@ See directory `examples/` for Motif applications written in Fortran:
 
 * **bitmap** shows an XBM bitmap.
 * **click** displays an XmPushButton widget inside an XmForm widget.
-* **www** an XmHTML widget width HTML 3.2 content.
+* **www** shows an XmHTML widget width HTML 3.2 content.
 
 Compile a particular example with:
 
