@@ -22,7 +22,6 @@ program main
         &<HTML>&
         &<HEAD>&
         &<TITLE>Example<TITLE>&
-        &<META http-equiv="content-type" content="text/html; charset=utf-8">&
         &</HEAD>&
         &<BODY>&
         &<H1>Hello, from Fortran!</H1>&

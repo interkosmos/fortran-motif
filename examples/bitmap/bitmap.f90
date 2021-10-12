@@ -9,17 +9,22 @@ program main
     use :: xm
     use :: xt
     implicit none
-    integer, parameter :: WINDOW_HEIGHT = 300
-    integer, parameter :: WINDOW_WIDTH  = 400
+    character(len=*), parameter :: XBM_FILE      = 'sisyphus.xbm'
+    integer,          parameter :: WINDOW_HEIGHT = 300
+    integer,          parameter :: WINDOW_WIDTH  = 400
 
     character(len=16),    target :: window_title = 'Fortran + Motif' // c_null_char
     integer(kind=c_long)         :: pixmap
     integer(kind=c_long), target :: bg, fg
+    logical                      :: file_exists
     type(c_ptr)                  :: app_ptr
     type(c_ptr)                  :: form_ptr
     type(c_ptr)                  :: label_ptr
     type(c_ptr)                  :: window_ptr
     type(xt_arg),         target :: args(6)
+
+    inquire (exist=file_exists, file=XBM_FILE)
+    if (.not. file_exists) stop 'XBM file not found'
 
     ! Create Xt window.
     call xt_set_arg(args(1), XM_N_TITLE,  c_loc(window_title))
@@ -49,7 +54,7 @@ program main
     call xt_set_arg(args(2), XM_N_BACKGROUND, c_loc(bg))
     call xt_get_values(form_ptr, c_loc(args), 2)
 
-    pixmap = xm_get_pixmap(xt_screen(form_ptr), 'sisyphus.xbm' // c_null_char, fg, bg)
+    pixmap = xm_get_pixmap(xt_screen(form_ptr), XBM_FILE // c_null_char, fg, bg)
 
     ! Create XmLabel widget.
     call xt_set_arg(args(1), XM_N_TOP_ATTACHMENT,  XM_ATTACH_FORM)

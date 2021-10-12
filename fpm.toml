@@ -1,0 +1,30 @@
+name = "fortran-motif"
+version = "0.1.0"
+license = "ISC"
+author = "Philipp Engel"
+maintainer = "@interkosmos"
+copyright = "Copyright (c) 2021, Philipp Engel"
+description = "Fortran 2008 ISO C binding interfaces to X/Motif"
+keywords = ["motif", "x11", "xlib"]
+
+[build]
+link = ["Xm", "Xt", "X11"]
+
+[library]
+source-dir = "src"
+
+[[example]]
+name = "bitmap"
+main = "bitmap.f90"
+source-dir = "examples/bitmap/"
+
+[[example]]
+name = "click"
+main = "click.f90"
+source-dir = "examples/click/"
+
+[[example]]
+name = "www"
+main = "www.f90"
+source-dir = "examples/www/"
+link = ["Xpm", "XmHTML", "Xm", "Xt", "X11"]

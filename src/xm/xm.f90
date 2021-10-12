@@ -19,6 +19,7 @@ module xm
     type(c_ptr), bind(c, name='xmFrameWidgetClass'),         public :: XM_FRAME_WIDGET_CLASS
     type(c_ptr), bind(c, name='xmLabelGadgetClass'),         public :: XM_LABEL_GADGET_CLASS
     type(c_ptr), bind(c, name='xmLabelWidgetClass'),         public :: XM_LABEL_WIDGET_CLASS
+    type(c_ptr), bind(c, name='xmListWidgetClass'),          public :: XM_LIST_WIDGET_CLASS
     type(c_ptr), bind(c, name='xmMainWindowWidgetClass'),    public :: XM_MAIN_WINDOW_WIDGET_CLASS
     type(c_ptr), bind(c, name='xmMessageBoxWidgetClass'),    public :: XM_MESSAGE_BOX_WIDGET_CLASS
     type(c_ptr), bind(c, name='xmPushButtonWidgetClass'),    public :: XM_PUSH_BUTTON_WIDGET_CLASS
@@ -172,8 +173,8 @@ module xm
     character(kind=c_char, len=*), parameter, public :: XM_N_TOP_WIDGET               = 'topWidget' // c_null_char
     character(kind=c_char, len=*), parameter, public :: XM_N_VALUE                    = 'value' // c_null_char
     character(kind=c_char, len=*), parameter, public :: XM_N_WIDTH                    = 'width' // c_null_char
-    character(kind=c_char, len=*), parameter, public :: XM_N_X                         = 'x' // c_null_char
-    character(kind=c_char, len=*), parameter, public :: XM_N_Y                         = 'y' // c_null_char
+    character(kind=c_char, len=*), parameter, public :: XM_N_X                        = 'x' // c_null_char
+    character(kind=c_char, len=*), parameter, public :: XM_N_Y                        = 'y' // c_null_char
 
     public :: xm_add_protocol_callback
     public :: xm_create_dialog_shell
@@ -294,40 +295,37 @@ module xm
         end function c_strlen
     end interface
 contains
+    pure function copy(a)
+        character, intent(in)  :: a(:)
+        character(len=size(a)) :: copy
+        integer(kind=8)        :: i
+
+        do i = 1, size(a)
+            copy(i:i) = a(i)
+        end do
+    end function copy
+
+    subroutine c_f_str_ptr(c_str, f_str)
+        type(c_ptr),                   intent(in)  :: c_str
+        character(len=:), allocatable, intent(out) :: f_str
+        character(kind=c_char), pointer            :: ptrs(:)
+        integer(kind=8)                            :: sz
+
+        if (.not. c_associated(c_str)) return
+        sz = c_strlen(c_str)
+        if (sz <= 0) return
+        call c_f_pointer(c_str, ptrs, [ sz ])
+        allocate (character(len=sz) :: f_str)
+        f_str = copy(ptrs)
+    end subroutine c_f_str_ptr
+
     function xm_text_field_get_string(widget)
         type(c_ptr), intent(in)       :: widget
         character(len=:), allocatable :: xm_text_field_get_string
         type(c_ptr)                   :: ptr
 
         ptr = xm_text_field_get_string_(widget)
-
         if (.not. c_associated(ptr)) return
-        allocate (character(len=c_strlen(ptr)) :: xm_text_field_get_string)
-        call c_f_string_ptr(ptr, xm_text_field_get_string)
+        call c_f_str_ptr(ptr, xm_text_field_get_string)
     end function xm_text_field_get_string
-
-    subroutine c_f_string_ptr(c_string, f_string)
-        !! Utility routine that copies a C string, passed as a C pointer, to a
-        !! Fortran string.
-        type(c_ptr),      intent(in)           :: c_string
-        character(len=*), intent(out)          :: f_string
-        character(kind=c_char, len=1), pointer :: char_ptrs(:)
-        integer                                :: i
-
-        if (.not. c_associated(c_string)) then
-            f_string = ' '
-            return
-        end if
-
-        call c_f_pointer(c_string, char_ptrs, [ huge(0) ])
-
-        i = 1
-
-        do while (char_ptrs(i) /= c_null_char .and. i <= len(f_string))
-            f_string(i:i) = char_ptrs(i)
-            i = i + 1
-        end do
-
-        if (i < len(f_string)) f_string(i:) = ' '
-    end subroutine c_f_string_ptr
 end module xm
